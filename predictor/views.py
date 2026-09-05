@@ -48,6 +48,7 @@ def home(request):
             advice = "Risk is low. Stay informed about weather conditions."
 
         FloodReport.objects.create(
+            user=request.user,
             rainfall=rainfall,
             river_level=river_level,
             area_type=area_type,
@@ -62,7 +63,7 @@ def home(request):
     
 @login_required
 def history(request):
-    reports = FloodReport.objects.order_by("-created_at")
+    reports = FloodReport.objects.filter(user=request.user).order_by("-created_at")
     return render(request, "predictor/history.html", {
         "reports": reports
     })

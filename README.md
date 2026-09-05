@@ -35,4 +35,6 @@ The local SQLite database and virtual environment are intentionally excluded fro
 
 Users can create an account with their name, username, email, and password. Existing users can sign in with either their username or email address. The **Forgot your password?** flow sends a one-time reset link to the account email.
 
+Saved flood reports are private per user. Each new report is linked to the account that created it, and the history page only shows that user’s reports. Reports created before account ownership was added remain unassigned and are hidden from user histories.
+
 For local development, reset emails are printed in the Django server console. For real email delivery, replace `EMAIL_BACKEND` in `flood_ai_system/settings.py` with an SMTP backend and configure the SMTP host, port, username, password, and TLS settings through environment variables.

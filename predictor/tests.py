@@ -43,6 +43,26 @@ class AuthenticationTests(TestCase):
 		self.assertIn("Reset your Flood Risk Prediction password", mail.outbox[0].subject)
 
 
+class ReportPrivacyTests(TestCase):
+	def test_report_history_is_private_to_each_user(self):
+		first_user = User.objects.create_user(username="first", password="StrongPassword123!")
+		second_user = User.objects.create_user(username="second", password="StrongPassword123!")
+
+		self.client.force_login(first_user)
+		self.client.post("/", {"rainfall": "75", "river_level": "2", "area_type": "Normal"})
+		self.client.force_login(second_user)
+		self.client.post("/", {"rainfall": "120", "river_level": "6", "area_type": "Normal"})
+
+		first_user_reports = FloodReport.objects.filter(user=first_user)
+		second_user_reports = FloodReport.objects.filter(user=second_user)
+		self.assertEqual(first_user_reports.count(), 1)
+		self.assertEqual(second_user_reports.count(), 1)
+
+		response = self.client.get("/history/")
+		self.assertContains(response, "120.0 mm")
+		self.assertNotContains(response, "75.0 mm")
+
+
 class RiskPredictionTests(TestCase):
 	def test_uses_rule_fallback_without_enough_training_data(self):
 		risk, method = predict_risk(75, 2, "Normal")

@@ -1,6 +1,8 @@
 from django.db import models
+from django.conf import settings
 
 class FloodReport(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="flood_reports", null=True, blank=True)
     rainfall = models.FloatField()
     river_level = models.FloatField()
     area_type = models.CharField(max_length=20)
