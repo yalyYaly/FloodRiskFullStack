@@ -1,0 +1,2 @@
+Django>=6.1,<7.0
+scikit-learn>=1.7,<2.0

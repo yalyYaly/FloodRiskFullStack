@@ -19,6 +19,10 @@ python manage.py runserver
 
 Open `http://127.0.0.1:8000/` in a browser.
 
+## Prediction model
+
+The application uses a `RandomForestClassifier` when the database contains at least six labeled reports covering `LOW`, `MEDIUM`, and `HIGH` outcomes. With less training data, it uses the transparent rule-based fallback so predictions are not made from an incomplete model. Replace the starter history with real labeled flood observations before relying on the model for operational decisions.
+
 ## Project layout
 
 - `flood_ai_system/` - Django project configuration

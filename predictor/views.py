@@ -1,27 +1,19 @@
 from django.shortcuts import render
 from .models import FloodReport
+from .ml_model import predict_risk
 
 
 def home(request):
     risk = None
     advice = None
+    prediction_method = None
 
     if request.method == "POST":
         rainfall = float(request.POST["rainfall"])
         river_level = float(request.POST["river_level"])
         area_type = request.POST["area_type"]
 
-        if rainfall > 100 and river_level > 5:
-            risk = "HIGH"
-        elif rainfall > 50 or river_level > 3:
-            risk = "MEDIUM"
-        else:
-            risk = "LOW"
-
-        if area_type == "Low-lying" and risk == "LOW":
-            risk = "MEDIUM"
-        elif area_type == "Low-lying" and risk == "MEDIUM":
-            risk = "HIGH"
+        risk, prediction_method = predict_risk(rainfall, river_level, area_type)
 
         if risk == "HIGH":
             advice = "Move to a safer place and follow emergency instructions."
@@ -39,7 +31,8 @@ def home(request):
 
     return render(request, "predictor/home.html", {
         "risk": risk,
-        "advice": advice
+        "advice": advice,
+        "prediction_method": prediction_method,
     })
     
 def history(request):
