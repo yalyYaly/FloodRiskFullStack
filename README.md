@@ -1,4 +1,4 @@
-# AI Flood Risk Prediction System
+# AI MonsoonMarginGuardian
 
 A Django application for assessing flood risk from rainfall, river level, and area type inputs. Prediction history is stored in the local database for later review.
 
