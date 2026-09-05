@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+db.sqlite3
+*.sqlite3-journal
+.env
+.env.*
+
+# Django static-file and test artifacts
+staticfiles/
+media/
+htmlcov/
+.coverage
+.pytest_cache/
+
+# IDE and local tooling
+.vscode/
+*.log

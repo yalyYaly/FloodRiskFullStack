@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flood Report History</title>
+</head>
+<body>
+    <h1>Saved Flood Reports</h1>
+    <p><a href="/">Back to Prediction Page</a></p>
+
+    {% if reports %}
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Rainfall</th>
+                <th>River Level</th>
+                <th>Area Type</th>
+                <th>Risk</th>
+                <th>Date and Time</th>
+            </tr>
+
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.rainfall }} mm</td>
+                <td>{{ report.river_level }} m</td>
+                <td>{{ report.area_type }}</td>
+                <td>{{ report.risk }}</td>
+                <td>{{ report.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No reports have been saved yet.</p>
+    {% endif %}
+</body>
+</html>
