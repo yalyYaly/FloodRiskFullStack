@@ -18,8 +18,11 @@
                         <button type="submit" class="link-button">Sign out</button>
                     </form>
                 {% else %}
-                    <span>Check flood risk without an account.</span>
-                    <span><a href="{% url 'login' %}">Sign in</a> or <a href="{% url 'signup' %}">Sign up</a></span>
+                    <span>Stay in touch with us by</span>
+                    <span class="auth-actions">
+                        <a class="auth-button" href="{% url 'login' %}">Sign in</a>
+                        <a class="auth-button auth-button-primary" href="{% url 'signup' %}">Sign up</a>
+                    </span>
                 {% endif %}
             </div>
             <h1>Flood Risk Prediction System</h1>

@@ -98,6 +98,33 @@ a {
     margin: 0;
 }
 
+.auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.auth-button {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid #07689f;
+    border-radius: 7px;
+    color: #07689f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-button-primary {
+    background: #07689f;
+    color: white;
+}
+
+.auth-button:hover,
+.auth-button-primary:hover {
+    background: #054d75;
+    color: white;
+}
+
 .link-button {
     width: auto;
     margin: 0;
