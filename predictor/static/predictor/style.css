@@ -80,3 +80,45 @@ a {
     color: #07689f;
     font-weight: bold;
 }
+
+.narrow {
+    max-width: 480px;
+}
+
+.account-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.account-bar form {
+    margin: 0;
+}
+
+.link-button {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    background: none;
+    color: #07689f;
+    font-size: inherit;
+}
+
+.link-button:hover {
+    background: none;
+    color: #054d75;
+}
+
+small, .errorlist {
+    display: block;
+    margin-top: 6px;
+}
+
+.errorlist {
+    padding: 0;
+    color: #a31515;
+    list-style: none;
+}

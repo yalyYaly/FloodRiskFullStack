@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in | Flood Risk Prediction</title>
+    <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
+</head>
+<body>
+    <div class="container narrow">
+        <div class="card">
+            <h1>Sign in</h1>
+            <p>Use your username or email address to continue.</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {{ form.identifier.label_tag }}
+                {{ form.identifier }}
+                {{ form.identifier.errors }}
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                {{ form.password.errors }}
+                <button type="submit">Sign in</button>
+            </form>
+            <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+            <p>New user? <a href="{% url 'signup' %}">Create an account</a></p>
+        </div>
+    </div>
+</body>
+</html>

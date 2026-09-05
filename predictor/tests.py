@@ -1,7 +1,46 @@
+from django.core import mail
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from .ml_model import predict_risk
 from .models import FloodReport
+
+
+User = get_user_model()
+
+
+class AuthenticationTests(TestCase):
+	def test_signup_creates_and_logs_in_user(self):
+		response = self.client.post("/signup/", {
+			"first_name": "Asha",
+			"username": "asha",
+			"email": "asha@example.com",
+			"password1": "StrongPassword123!",
+			"password2": "StrongPassword123!",
+		})
+
+		self.assertRedirects(response, "/")
+		self.assertTrue(response.wsgi_request.user.is_authenticated)
+		self.assertTrue(User.objects.filter(username="asha").exists())
+
+	def test_login_accepts_email_and_password_reset_sends_email(self):
+		user = User.objects.create_user(
+			username="asha",
+			email="asha@example.com",
+			password="StrongPassword123!",
+		)
+
+		login_response = self.client.post("/login/", {
+			"identifier": "asha@example.com",
+			"password": "StrongPassword123!",
+		})
+		self.assertRedirects(login_response, "/")
+
+		self.client.post("/logout/")
+		reset_response = self.client.post("/password-reset/", {"email": user.email})
+		self.assertRedirects(reset_response, "/password-reset/done/")
+		self.assertEqual(len(mail.outbox), 1)
+		self.assertIn("Reset your Flood Risk Prediction password", mail.outbox[0].subject)
 
 
 class RiskPredictionTests(TestCase):

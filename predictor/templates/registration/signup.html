@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create account | Flood Risk Prediction</title>
+    <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
+</head>
+<body>
+    <div class="container narrow">
+        <div class="card">
+            <h1>Create account</h1>
+            <p>Enter your details to start using flood risk prediction.</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                    {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+                {% endfor %}
+                <button type="submit">Create account</button>
+            </form>
+            <p>Already registered? <a href="{% url 'login' %}">Sign in</a></p>
+        </div>
+    </div>
+</body>
+</html>

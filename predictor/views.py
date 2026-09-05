@@ -1,8 +1,33 @@
-from django.shortcuts import render
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+from .forms import LoginForm, SignUpForm
 from .models import FloodReport
 from .ml_model import predict_risk
 
 
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    form = SignUpForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        user = form.save()
+        login(request, user)
+        return redirect("home")
+    return render(request, "registration/signup.html", {"form": form})
+
+
+def signin(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+    form = LoginForm(request, request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        login(request, form.get_user())
+        return redirect(request.GET.get("next") or "home")
+    return render(request, "registration/login.html", {"form": form})
+
+
+@login_required
 def home(request):
     risk = None
     advice = None
@@ -35,8 +60,16 @@ def home(request):
         "prediction_method": prediction_method,
     })
     
+@login_required
 def history(request):
     reports = FloodReport.objects.order_by("-created_at")
     return render(request, "predictor/history.html", {
         "reports": reports
     })
+
+
+@login_required
+def signout(request):
+    if request.method == "POST":
+        logout(request)
+    return redirect("login")

@@ -30,3 +30,9 @@ The application uses a `RandomForestClassifier` when the database contains at le
 - `manage.py` - Django command-line entry point
 
 The local SQLite database and virtual environment are intentionally excluded from Git.
+
+## Accounts and password reset
+
+Users can create an account with their name, username, email, and password. Existing users can sign in with either their username or email address. The **Forgot your password?** flow sends a one-time reset link to the account email.
+
+For local development, reset emails are printed in the Django server console. For real email delivery, replace `EMAIL_BACKEND` in `flood_ai_system/settings.py` with an SMTP backend and configure the SMTP host, port, username, password, and TLS settings through environment variables.

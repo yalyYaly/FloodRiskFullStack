@@ -4,8 +4,15 @@
     <title>Flood Report History</title>
 </head>
 <body>
+    <div class="account-bar">
+        <span>Signed in as {{ user.first_name|default:user.username }}</span>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="link-button">Sign out</button>
+        </form>
+    </div>
     <h1>Saved Flood Reports</h1>
-    <p><a href="/">Back to Prediction Page</a></p>
+    <p><a href="{% url 'home' %}">Back to Prediction Page</a></p>
 
     {% if reports %}
         <table border="1" cellpadding="10">
