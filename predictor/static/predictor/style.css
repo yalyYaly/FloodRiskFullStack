@@ -53,6 +53,23 @@ h1 {
     color: #07689f;
 }
 
+.topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 16px 0 8px;
+}
+
+.topic-tags span {
+    padding: 5px 9px;
+    border: 1px solid #b5c7d3;
+    border-radius: 999px;
+    color: #31566d;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 label {
     display: block;
     margin-top: 16px;

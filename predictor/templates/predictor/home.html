@@ -11,6 +11,9 @@
     <meta property="og:description" content="AI-assisted flood risk prediction using rainfall, river level, and area type.">
     <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}">
     <meta name="twitter:card" content="summary">
+    <meta property="article:tag" content="AI flood prediction">
+    <meta property="article:tag" content="flood risk assessment">
+    <meta property="article:tag" content="flood preparedness">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -47,6 +50,11 @@
             </div>
             <h1>AI Flood Risk Prediction System</h1>
             <p>Enter local conditions to predict flood risk.</p>
+            <div class="topic-tags" aria-label="Topics">
+                <span>AI flood prediction</span>
+                <span>Risk assessment</span>
+                <span>Flood preparedness</span>
+            </div>
 
             <form method="post">
                 {% csrf_token %}
