@@ -18,9 +18,10 @@
                         <button type="submit" class="link-button">Sign out</button>
                     </form>
                 {% else %}
-                    <span>Stay in touch with us by</span>
                     <span class="auth-actions">
+                        <span>Already a user?</span>
                         <a class="auth-button" href="{% url 'login' %}">Sign in</a>
+                        <span>New user?</span>
                         <a class="auth-button auth-button-primary" href="{% url 'signup' %}">Sign up</a>
                     </span>
                 {% endif %}
