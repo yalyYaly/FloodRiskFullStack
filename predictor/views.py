@@ -27,7 +27,6 @@ def signin(request):
     return render(request, "registration/login.html", {"form": form})
 
 
-@login_required
 def home(request):
     risk = None
     advice = None
@@ -47,13 +46,14 @@ def home(request):
         else:
             advice = "Risk is low. Stay informed about weather conditions."
 
-        FloodReport.objects.create(
-            user=request.user,
-            rainfall=rainfall,
-            river_level=river_level,
-            area_type=area_type,
-            risk=risk
-        )
+        if request.user.is_authenticated:
+            FloodReport.objects.create(
+                user=request.user,
+                rainfall=rainfall,
+                river_level=river_level,
+                area_type=area_type,
+                risk=risk
+            )
 
     return render(request, "predictor/home.html", {
         "risk": risk,

@@ -44,6 +44,17 @@ class AuthenticationTests(TestCase):
 
 
 class ReportPrivacyTests(TestCase):
+	def test_anonymous_users_can_check_risk_without_saving_a_report(self):
+		response = self.client.post("/", {
+			"rainfall": "75",
+			"river_level": "2",
+			"area_type": "Normal",
+		})
+
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "Flood Risk: MEDIUM")
+		self.assertEqual(FloodReport.objects.count(), 0)
+
 	def test_report_history_is_private_to_each_user(self):
 		first_user = User.objects.create_user(username="first", password="StrongPassword123!")
 		second_user = User.objects.create_user(username="second", password="StrongPassword123!")
