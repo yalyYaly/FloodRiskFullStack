@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
 </head>
 <body>
-    <div class="container">
+    <div class="page-layout">
         <div class="card">
             <div class="account-bar">
                 {% if user.is_authenticated %}
@@ -58,6 +58,31 @@
 
             <p><a href="{% url 'history' %}">View Saved Flood Reports</a></p>
         </div>
+        <aside class="facts-panel">
+            <p class="eyebrow">UNDRR GAR 2025</p>
+            <h2>Flood facts</h2>
+            <p class="facts-intro">Global indicators from the UNDRR flood hazard exploration.</p>
+            <dl class="facts-list">
+                <div>
+                    <dt>Share of weather disasters</dt>
+                    <dd>{{ flood_facts.weather_share }}</dd>
+                </div>
+                <div>
+                    <dt>People exposed in 2020</dt>
+                    <dd>{{ flood_facts.exposed_people }}</dd>
+                </div>
+                <div>
+                    <dt>Annual average losses</dt>
+                    <dd>{{ flood_facts.annual_losses }}</dd>
+                </div>
+                <div>
+                    <dt>Projected infrastructure losses</dt>
+                    <dd>{{ flood_facts.future_losses }}</dd>
+                </div>
+            </dl>
+            <p class="coverage-note">The source publishes global indicators and projections, not a complete event-by-event archive through 2026.</p>
+            <a class="source-link" href="https://www.undrr.org/gar/gar2025/hazard-exploration/floods" target="_blank" rel="noopener">Read the UNDRR source</a>
+        </aside>
     </div>
 </body>
 </html>

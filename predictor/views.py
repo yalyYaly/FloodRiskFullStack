@@ -31,6 +31,12 @@ def home(request):
     risk = None
     advice = None
     prediction_method = None
+    flood_facts = {
+        "weather_share": "35-40%",
+        "exposed_people": "35.1 million",
+        "annual_losses": "USD 388.4 billion",
+        "future_losses": "USD 407-439 billion by 2050",
+    }
 
     if request.method == "POST":
         rainfall = float(request.POST["rainfall"])
@@ -59,6 +65,7 @@ def home(request):
         "risk": risk,
         "advice": advice,
         "prediction_method": prediction_method,
+        "flood_facts": flood_facts,
     })
     
 @login_required

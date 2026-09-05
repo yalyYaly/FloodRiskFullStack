@@ -39,4 +39,6 @@ Saved flood reports are private per user. Each new report is linked to the accou
 
 The prediction form is public, so visitors can check flood risk without an account. Anonymous predictions are not saved; users can sign in or create an account when they want report history.
 
+The home page includes a UNDRR GAR 2025 flood-facts sidebar. The source page provides global indicators and projections rather than a complete event-level flood dataset through 2026, so the sidebar labels its coverage explicitly and links to the original source.
+
 For local development, reset emails are printed in the Django server console. For real email delivery, replace `EMAIL_BACKEND` in `flood_ai_system/settings.py` with an SMTP backend and configure the SMTP host, port, username, password, and TLS settings through environment variables.
