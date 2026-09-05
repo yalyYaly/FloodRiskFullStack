@@ -1,9 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Flood Report History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
 </head>
-<body>
+<body class="page-mumbai">
     <div class="account-bar">
         <span>Signed in as {{ user.first_name|default:user.username }}</span>
         <form method="post" action="{% url 'logout' %}">
@@ -37,5 +40,6 @@
     {% else %}
         <p>No reports have been saved yet.</p>
     {% endif %}
+    <p class="photo-credit">Background: <a href="https://commons.wikimedia.org/wiki/File:Indian_Navy_extends_support_during_2017_Mumbai_flood_(1).jpg" target="_blank" rel="noopener">Mumbai flood response</a> by the Indian Navy, Government Open Data License (India).</p>
 </body>
 </html>

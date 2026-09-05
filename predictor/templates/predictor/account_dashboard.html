@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
+</head>
+<body class="page-mumbai">
+    <main class="admin-shell">
+        <div class="account-bar">
+            <span>Administrator: {{ user.first_name|default:user.username }}</span>
+            <a href="{% url 'home' %}">Back to prediction page</a>
+        </div>
+        <section class="card">
+            <p class="eyebrow">ADMINISTRATION</p>
+            <h1>Account dashboard</h1>
+            <div class="admin-stats">
+                <div><strong>{{ accounts|length }}</strong><span>Active accounts</span></div>
+                <div><strong>{{ deleted_count }}</strong><span>Deleted accounts</span></div>
+            </div>
+            {% if error %}<p class="chat-error" role="alert">{{ error }}</p>{% endif %}
+
+            <h2>Active accounts</h2>
+            <form method="get" class="account-search">
+                <label for="account-search">Search by name, username, or email</label>
+                <div class="account-search-row">
+                    <input id="account-search" type="search" name="q" value="{{ search_query }}" placeholder="e.g. yalini or example.com">
+                    <button type="submit">Search accounts</button>
+                    {% if search_query %}<a href="{% url 'account_dashboard' %}">Clear</a>{% endif %}
+                </div>
+            </form>
+            {% if search_query %}<p class="search-summary">Showing matches for “{{ search_query }}”.</p>{% endif %}
+            <div class="admin-table-wrap">
+                <table>
+                    <thead><tr><th>Name</th><th>Username</th><th>Email</th><th>Joined</th><th>Action</th></tr></thead>
+                    <tbody>
+                        {% for account in accounts %}
+                            <tr>
+                                <td>{{ account.first_name|default:"-" }}</td>
+                                <td>{{ account.username }}</td>
+                                <td>{{ account.email|default:"-" }}</td>
+                                <td>{{ account.date_joined|date:"Y-m-d" }}</td>
+                                <td>
+                                    {% if account.pk == user.pk or account.is_superuser %}
+                                        <span class="protected-account">Protected</span>
+                                    {% else %}
+                                        <form method="post" onsubmit="return confirm('Delete this account? Its audit record will remain.');">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="user_id" value="{{ account.pk }}">
+                                            <button type="submit" class="danger-button">Delete</button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="5">No active accounts.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Deleted-account history</h2>
+            <div class="admin-table-wrap">
+                <table>
+                    <thead><tr><th>Username</th><th>Email</th><th>Deleted at</th><th>Deleted by</th></tr></thead>
+                    <tbody>
+                        {% for account in deleted_accounts %}
+                            <tr><td>{{ account.username }}</td><td>{{ account.email|default:"-" }}</td><td>{{ account.deleted_at|date:"Y-m-d H:i" }}</td><td>{{ account.deleted_by.username|default:"Unknown" }}</td></tr>
+                        {% empty %}
+                            <tr><td colspan="4">No accounts have been deleted.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <p class="photo-credit">Background: <a href="https://commons.wikimedia.org/wiki/File:Indian_Navy_extends_support_during_2017_Mumbai_flood_(1).jpg" target="_blank" rel="noopener">Mumbai flood response</a> by the Indian Navy, Government Open Data License (India).</p>
+</body>
+</html>

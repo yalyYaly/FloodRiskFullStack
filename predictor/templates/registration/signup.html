@@ -3,9 +3,10 @@
 <html>
 <head>
     <title>Create account | Flood Risk Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
 </head>
-<body>
+<body class="page-china">
     <div class="container narrow">
         <div class="card">
             <h1>Create account</h1>
@@ -24,5 +25,6 @@
             <p>Already registered? <a href="{% url 'login' %}">Sign in</a></p>
         </div>
     </div>
+    <p class="photo-credit">Background: <a href="https://commons.wikimedia.org/wiki/File:2013_Flood_in_Sichuan.jpg" target="_blank" rel="noopener">Sichuan flood photograph</a>, CC0.</p>
 </body>
 </html>

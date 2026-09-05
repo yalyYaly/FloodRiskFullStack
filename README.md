@@ -1,4 +1,4 @@
-# Flood Risk Prediction System
+# AI Flood Risk Prediction System
 
 A Django application for assessing flood risk from rainfall, river level, and area type inputs. Prediction history is stored in the local database for later review.
 
@@ -6,18 +6,42 @@ A Django application for assessing flood risk from rainfall, river level, and ar
 
 - Python 3.10 or newer
 - Django
+- scikit-learn
 
-## Run locally
+## Run locally in VS Code
+
+Open the project folder in VS Code, then choose **Terminal > New Terminal** and run these commands in PowerShell:
 
 ```powershell
-python -m venv .venv
+py -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install django
+python -m pip install -r requirements.txt
 python manage.py migrate
+python manage.py test
 python manage.py runserver
 ```
 
 Open `http://127.0.0.1:8000/` in a browser.
+
+Main pages:
+
+- `http://127.0.0.1:8000/` - AI flood-risk prediction
+- `http://127.0.0.1:8000/chat/` - personal flood assistant
+- `http://127.0.0.1:8000/accounts/` - administrator account dashboard
+
+For a new database, create an administrator with:
+
+```powershell
+python manage.py createsuperuser
+```
+
+To test from another device on the same Wi-Fi network, run:
+
+```powershell
+python manage.py runserver 0.0.0.0:8000
+```
+
+Then open `http://YOUR-COMPUTER-IP:8000/` from that device. Public internet access requires deployment to a hosting provider with HTTPS.
 
 ## Prediction model
 

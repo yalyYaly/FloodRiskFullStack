@@ -1,8 +1,29 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #eaf6ff;
+    min-width: 320px;
+    background-color: #eaf6ff;
+    background-image: linear-gradient(rgba(234, 246, 255, 0.84), rgba(234, 246, 255, 0.84)), var(--flood-image);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
     color: #17324d;
+}
+
+.page-nepal {
+    --flood-image: url("https://upload.wikimedia.org/wikipedia/commons/c/c3/Landsat_Nepal_flood_2026-08-26.png");
+}
+
+.page-mumbai {
+    --flood-image: url("https://upload.wikimedia.org/wikipedia/commons/a/a2/Indian_Navy_extends_support_during_2017_Mumbai_flood_%281%29.jpg");
+}
+
+.page-chennai {
+    --flood-image: url("https://upload.wikimedia.org/wikipedia/commons/7/77/Chennai_flood_water_logging_near_ofice_nandanam4.jpg");
+}
+
+.page-china {
+    --flood-image: url("https://upload.wikimedia.org/wikipedia/commons/c/c5/2013_Flood_in_Sichuan.jpg");
 }
 
 .page-layout {
@@ -211,10 +232,340 @@ small, .errorlist {
     margin-top: 4px;
 }
 
+.photo-credit {
+    width: min(90%, 1120px);
+    margin: 12px auto 24px;
+    color: #17324d;
+    font-size: 12px;
+    text-align: center;
+}
+
+.photo-credit a {
+    color: inherit;
+}
+
+.chat-shell {
+    width: min(94%, 920px);
+    margin: 32px auto 0;
+}
+
+.chat-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0;
+}
+
+.chat-header h1 {
+    margin: 6px 0;
+    text-align: left;
+}
+
+.chat-header p {
+    margin: 0;
+}
+
+.chat-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    white-space: nowrap;
+}
+
+.chat-nav form {
+    margin: 0;
+}
+
+.chat-card {
+    overflow: hidden;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.chat-disclaimer {
+    padding: 12px 20px;
+    background: #fff8dc;
+    color: #6f5600;
+    font-size: 13px;
+}
+
+.message-list {
+    display: grid;
+    gap: 14px;
+    min-height: 280px;
+    max-height: 52vh;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.message {
+    max-width: 78%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
+.message p {
+    margin: 6px 0 0;
+}
+
+.assistant-message {
+    justify-self: start;
+    background: #edf7fb;
+}
+
+.user-message {
+    justify-self: end;
+    background: #07689f;
+    color: white;
+}
+
+.chat-form {
+    display: grid;
+    gap: 8px;
+    padding: 20px 24px 24px;
+    border-top: 1px solid #d5e5ee;
+}
+
+.chat-form label {
+    margin: 0;
+}
+
+.chat-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #b5c7d3;
+    border-radius: 7px;
+    font: inherit;
+    resize: vertical;
+}
+
+.chat-form button {
+    margin-top: 4px;
+}
+
+.chat-error {
+    margin: 0 24px;
+    color: #a31515;
+}
+
+.admin-shell {
+    width: min(94%, 1120px);
+    margin: 24px auto 0;
+}
+
+.admin-shell h1 {
+    margin-bottom: 28px;
+}
+
+.admin-shell h2 {
+    margin-top: 28px;
+    color: #17324d;
+}
+
+.account-search {
+    margin: 16px 0 10px;
+}
+
+.account-search label {
+    margin: 0 0 6px;
+}
+
+.account-search-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.account-search-row input {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.account-search-row button {
+    width: auto;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.account-search-row a {
+    white-space: nowrap;
+}
+
+.search-summary {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.admin-stats {
+    display: flex;
+    gap: 14px;
+}
+
+.admin-stats div {
+    display: grid;
+    gap: 4px;
+    min-width: 150px;
+    padding: 16px;
+    background: #edf7fb;
+    border-radius: 8px;
+}
+
+.admin-stats strong {
+    color: #07689f;
+    font-size: 28px;
+}
+
+.admin-stats span,
+.protected-account {
+    font-size: 13px;
+}
+
+.admin-table-wrap {
+    overflow-x: auto;
+}
+
+.admin-table-wrap table {
+    min-width: 720px;
+}
+
+.admin-table-wrap form {
+    margin: 0;
+}
+
+.danger-button {
+    width: auto;
+    margin: 0;
+    padding: 8px 12px;
+    background: #a31515;
+}
+
+.danger-button:hover {
+    background: #781010;
+}
+
 @media (max-width: 860px) {
     .page-layout {
         grid-template-columns: 1fr;
         width: 92%;
         margin: 24px auto;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+.container,
+.page-layout,
+.photo-credit {
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .page-layout,
+    .container {
+        width: calc(100% - 24px);
+        margin: 12px auto;
+    }
+
+    .card {
+        padding: 20px 16px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 26px;
+        line-height: 1.15;
+    }
+
+    .account-bar,
+    .auth-actions {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .account-bar {
+        gap: 8px;
+    }
+
+    .facts-panel {
+        padding: 18px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .photo-credit {
+        width: calc(100% - 24px);
+        line-height: 1.4;
+    }
+
+    .chat-shell {
+        width: calc(100% - 24px);
+        margin-top: 8px;
+    }
+
+    .chat-header {
+        display: block;
+        padding: 16px 0;
+    }
+
+    .chat-header h1 {
+        font-size: 25px;
+    }
+
+    .chat-nav {
+        flex-wrap: wrap;
+        margin-top: 14px;
+        white-space: normal;
+    }
+
+    .message-list {
+        max-height: none;
+        min-height: 220px;
+        padding: 16px;
+    }
+
+    .message {
+        max-width: 88%;
+    }
+
+    .chat-form {
+        padding: 16px;
+    }
+
+    .admin-shell {
+        width: calc(100% - 24px);
+        margin-top: 8px;
+    }
+
+    .admin-stats {
+        flex-wrap: wrap;
+    }
+
+    .account-search-row {
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+    .account-search-row input,
+    .account-search-row button {
+        width: 100%;
     }
 }

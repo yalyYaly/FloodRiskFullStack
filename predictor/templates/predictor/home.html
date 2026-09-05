@@ -2,12 +2,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flood Risk Prediction System</title>
+    <title>AI Flood Risk Prediction System | Flood Predictor</title>
+    <meta name="description" content="Predict flood risk from rainfall, river level, and area type using an AI-assisted flood prediction system.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AI Flood Risk Prediction System">
+    <meta property="og:description" content="AI-assisted flood risk prediction using rainfall, river level, and area type.">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}">
+    <meta name="twitter:card" content="summary">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "AI Flood Risk Prediction System",
+            "applicationCategory": "WeatherApplication",
+            "description": "AI-assisted flood risk prediction from rainfall, river level, and area type.",
+            "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'home' %}"
+        }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
     {% load static %}
 <link rel="stylesheet" href="{% static 'predictor/style.css' %}">
 </head>
-<body>
+<body class="page-nepal">
     <div class="page-layout">
         <div class="card">
             <div class="account-bar">
@@ -26,7 +45,7 @@
                     </span>
                 {% endif %}
             </div>
-            <h1>Flood Risk Prediction System</h1>
+            <h1>AI Flood Risk Prediction System</h1>
             <p>Enter local conditions to predict flood risk.</p>
 
             <form method="post">
@@ -57,6 +76,18 @@
             {% endif %}
 
             <p><a href="{% url 'history' %}">View Saved Flood Reports</a></p>
+            {% if user.is_authenticated %}
+                <p><a href="{% url 'chat' %}">🤖 Chat with your flood assistant</a></p>
+                {% if user.is_staff %}
+                    <p><a href="{% url 'account_dashboard' %}">Admin account dashboard</a></p>
+                {% endif %}
+                {% if can_claim_admin %}
+                    <form method="post" action="{% url 'claim_admin' %}">
+                        {% csrf_token %}
+                        <button type="submit">Claim first administrator access</button>
+                    </form>
+                {% endif %}
+            {% endif %}
         </div>
         <aside class="facts-panel">
             <p class="eyebrow">UNDRR GAR 2025</p>
@@ -84,5 +115,6 @@
             <a class="source-link" href="https://www.undrr.org/gar/gar2025/hazard-exploration/floods" target="_blank" rel="noopener">Read the UNDRR source</a>
         </aside>
     </div>
+    <p class="photo-credit">Background: <a href="https://commons.wikimedia.org/wiki/File:Landsat_Nepal_flood_2026-08-26.png" target="_blank" rel="noopener">Nepal flood imagery</a> by USGS/Landsat 9, public domain.</p>
 </body>
 </html>

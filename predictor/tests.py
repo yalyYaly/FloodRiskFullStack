@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from .ml_model import predict_risk
-from .models import FloodReport
+from .models import ChatMessage, Conversation, FloodReport
 
 
 User = get_user_model()
@@ -95,3 +95,68 @@ class RiskPredictionTests(TestCase):
 
 		self.assertEqual(risk, "HIGH")
 		self.assertEqual(method, "Random Forest")
+
+
+class ChatPrivacyTests(TestCase):
+	def test_chat_requires_login(self):
+		response = self.client.get("/chat/")
+
+		self.assertRedirects(response, "/login/?next=/chat/")
+
+	def test_chat_persists_messages_for_the_logged_in_user(self):
+		user = User.objects.create_user(username="asha", password="StrongPassword123!")
+		self.client.force_login(user)
+
+		response = self.client.post("/chat/", {"message": "What is my risk?"})
+
+		self.assertRedirects(response, "/chat/")
+		conversation = Conversation.objects.get(user=user)
+		self.assertEqual(conversation.messages.count(), 2)
+		self.assertEqual(ChatMessage.objects.filter(role="assistant").count(), 1)
+		self.assertContains(self.client.get("/chat/"), "Enter rainfall, river level, and area type")
+
+	def test_chat_history_is_private_to_each_user(self):
+		first_user = User.objects.create_user(username="first", password="StrongPassword123!")
+		second_user = User.objects.create_user(username="second", password="StrongPassword123!")
+
+		self.client.force_login(first_user)
+		self.client.post("/chat/", {"message": "A private question"})
+		self.client.force_login(second_user)
+
+		response = self.client.get("/chat/")
+
+		self.assertNotContains(response, "A private question")
+		self.assertContains(response, "Hello second")
+
+
+class AccountDashboardTests(TestCase):
+	def test_staff_can_search_accounts_by_email_or_username(self):
+		admin = User.objects.create_user(username="admin", password="StrongPassword123!", is_staff=True)
+		User.objects.create_user(username="riverwatch", email="river@example.com", password="StrongPassword123!")
+		User.objects.create_user(username="mountain", email="mountain@example.com", password="StrongPassword123!")
+		self.client.force_login(admin)
+
+		response = self.client.get("/accounts/?q=river@example.com")
+
+		self.assertContains(response, "riverwatch")
+		self.assertNotContains(response, "mountain")
+
+	def test_non_staff_cannot_open_account_dashboard(self):
+		user = User.objects.create_user(username="member", password="StrongPassword123!")
+		self.client.force_login(user)
+
+		response = self.client.get("/accounts/")
+
+		self.assertEqual(response.status_code, 302)
+
+
+class SearchVisibilityTests(TestCase):
+	def test_public_seo_endpoints_and_home_metadata(self):
+		robots_response = self.client.get("/robots.txt")
+		sitemap_response = self.client.get("/sitemap.xml")
+		home_response = self.client.get("/")
+
+		self.assertContains(robots_response, "Sitemap: http://testserver/sitemap.xml")
+		self.assertContains(sitemap_response, "http://testserver/")
+		self.assertContains(home_response, "AI Flood Risk Prediction System")
+		self.assertContains(home_response, "name=\"description\"")
